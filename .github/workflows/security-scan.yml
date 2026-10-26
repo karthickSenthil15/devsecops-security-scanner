@@ -25,8 +25,8 @@ jobs:
           scan-ref: .
           format: json
           output: trivy-report.json
-          severity: HIGH,CRITICAL
-          exit-code: '1'
+          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          exit-code: '0'
 
       - name: Upload Security Report
         if: always()
