@@ -17,11 +17,22 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+    
       - name: Run Trivy Scanner
         uses: aquasecurity/trivy-action@master
         with:
           scan-type: fs
           scan-ref: .
-          format: table
+          format: json
+          output: trivy-report.json
           severity: HIGH,CRITICAL
           exit-code: '1'
+
+      - name: Upload Security Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trivy-security-report
+          path: trivy-report.json
+          if-no-files-found: warn
+          retention-days: 7
